@@ -76,3 +76,15 @@ def protected():
     user = User.filter.get(current_user_id)
     
     return jsonify({"id": user.id, "email": user.email }), 200
+
+      login: async (email, password) => {
+                const response = await fetch(process.env.BACKEND_URL + "/api/login", {
+                    method: 'POST',
+                    body: JSON.stringify({ email, password}),
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                })
+                const data = await response.json();
+                setStore({ ...getStore(), token: data.token });
+            }   
